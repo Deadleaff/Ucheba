@@ -33,13 +33,13 @@ int choose_main_element(int* indi, double* a, int n, int i, double eps) {
         printf("Нельзя применить метод, матрица вырождена\n");
         return 1;
     }
-    indi[i] = max_ind;
-    indi[max_ind] = i;
+    
+    swap(indi + i, indi + max_ind);
 
     return 0;
 }
 
-int jordan_algorithm(double* a, int* indi, double* b, double** x, int n, double eps) {
+int jordan_algorithm(double* a, int* indi, double* b, double* x, int n, double eps) {
     double factor;
     double main_elem;
     for(int i = 0; i < n; i++) {
@@ -74,7 +74,11 @@ int jordan_algorithm(double* a, int* indi, double* b, double** x, int n, double 
         }
 
     }
-    *x = b;
+    
+    for(int k = 0; k < n; k++) {
+        x[indi[k]] = b[k];
+    }
+
     return 0;
 }
 
